@@ -95,4 +95,31 @@ public class Consultoria {
         }
         return desenvolvedorComMenorSalario;
     }
+
+    public List<Desenvolvedor> buscarPorTecnologia(String tecnologia){
+        List<Desenvolvedor> desenvolvedoresEncontrados = new ArrayList<>();
+        for (Desenvolvedor desenvolvedor : desenvolvedores){
+            if (desenvolvedor instanceof DesenvolvedorMobile){
+                if (((DesenvolvedorMobile) desenvolvedor).getLinguagem() == tecnologia || ((DesenvolvedorMobile) desenvolvedor).getPlataforma() == tecnologia){
+                    desenvolvedoresEncontrados.add(desenvolvedor);
+                }
+            }
+            if (desenvolvedor instanceof DesenvolvedorWeb){
+                if (((DesenvolvedorWeb) desenvolvedor).getBackend() == tecnologia || ((DesenvolvedorWeb) desenvolvedor).getFrontend() == tecnologia || ((DesenvolvedorWeb) desenvolvedor).getSgbd() == tecnologia){
+                    desenvolvedoresEncontrados.add(desenvolvedor);
+                }
+            }
+        }
+        return desenvolvedoresEncontrados;
+    }
+
+    public Double getTotalSalariosPorTecnologia(String tecnologia){
+        List<Desenvolvedor> listaEncontrada = buscarPorTecnologia(tecnologia);
+        Double salarioTotal = 0.0;
+        for (Desenvolvedor desenvolvedor : listaEncontrada){
+            salarioTotal = salarioTotal + desenvolvedor.calcularSalario();
+        }
+        return salarioTotal;
+    }
+
 }
